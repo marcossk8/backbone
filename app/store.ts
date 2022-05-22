@@ -1,10 +1,10 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { counterReducer } from "../features/testCount";
+import { contactsReducer } from "../features/contacts";
 
 export const store = configureStore({
   reducer: {
     // This is where we add reducers.
-    counter: counterReducer,
+    contacts: contactsReducer
   },
 });
 

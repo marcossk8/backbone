@@ -1,31 +1,51 @@
+import { FC, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { gridColumns } from "../../utilities";
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 10, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  { id: 11, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
+import { useAppSelector } from "../../app/hooks";
+import { selectContacts } from "../../features/contacts";
+import { gridColumns, removeAccents } from "../../utilities";
+import { TableHeader } from "./TableHeader";
+import { ContactsResult } from "../../interfaces";
 
 export const Table = () => {
+  const contacts = useAppSelector(selectContacts);
+
+  const [dataContacts, setDataContacts] = useState<ContactsResult[]>([]);
+
+  useEffect(() => {
+    setDataContacts(contacts)
+  }, [contacts])
+  
+  const handleSearch = (value: string) => {
+    const data = contacts.filter(
+      ({ firstName, lastName, email, phone }) =>
+        validateValues(firstName, value) ||
+        validateValues(lastName, value) ||
+        validateValues(email, value) ||
+        validateValues(phone, value)
+    );
+
+    setDataContacts(data);
+  };
+
+  const validateValues = (contactElement: string, value: string) => {
+    return removeAccents(contactElement)
+      .toLowerCase()
+      .includes(removeAccents(value).toLowerCase());
+  };
+
   return (
-    <div style={{ height: "78vh", width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={gridColumns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        disableSelectionOnClick
-        disableColumnMenu
-      />
-    </div>
+    <>
+      <TableHeader handleSearch={handleSearch} />
+      <div style={{ height: "78vh", width: "100%" }}>
+        <DataGrid
+          rows={dataContacts}
+          columns={gridColumns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          disableSelectionOnClick
+          disableColumnMenu
+        />
+      </div>
+    </>
   );
 };

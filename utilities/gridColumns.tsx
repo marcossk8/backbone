@@ -9,7 +9,7 @@ export const gridColumns: GridColDef[] = [
     field: "avatar",
     headerName: "",
     sortable: false,
-    width: 90,
+    width: 68,
     renderCell: ({ row }) => {
       const firstName = row.firstName || "A";
 
@@ -27,17 +27,21 @@ export const gridColumns: GridColDef[] = [
     width: 150,
   },
   {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 110,
+    field: "email",
+    headerName: "Email",
+    width: 240,
+  },
+  {
+    field: "phone",
+    headerName: "Phone",
+    width: 150,
   },
   {
     field: "fullName",
     headerName: "Full name",
     description: "This column has a value getter and is not sortable.",
     sortable: false,
-    width: 160,
+    width: 170,
     valueGetter: (params: GridValueGetterParams) =>
       `${params.row.firstName || ""} ${params.row.lastName || ""}`,
   },
