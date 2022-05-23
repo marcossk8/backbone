@@ -13,9 +13,6 @@ export const lightTheme = createTheme({
     secondary: {
       main: "#79DAE8",
     },
-    error: {
-      main: red.A400,
-    },
   },
   components: {
     MuiAppBar: {

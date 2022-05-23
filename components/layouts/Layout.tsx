@@ -9,14 +9,14 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export const Layout: React.FC<Props> = ({ title = "BackBone", children }) => {
+export const Layout: React.FC<Props> = ({ title = "Contacts", children }) => {
   return (
     <Box sx={{ flexFlow: 1 }}>
       <Head>
-        <title>{title}</title>
+        <title>{title} - BackBone</title>
       </Head>
 
-      <NavBar />
+      <NavBar title={title} />
 
       <Box>
         <Container>{children}</Container>

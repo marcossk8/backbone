@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useAppSelector } from "../../app/hooks";
 import { selectContacts } from "../../features/contacts";

@@ -16,12 +16,11 @@ const Home: NextPage<Props> = ({ contacts }) => {
 
   useEffect(() => {
     dispatch(contactData(contacts))
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   return (
-    <Layout title="Contactos - BackBone">
+    <Layout title="Contacts">
       <Table />
     </Layout>
   );

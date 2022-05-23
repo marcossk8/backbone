@@ -2,7 +2,6 @@ import { FC } from "react";
 import Link from "next/link";
 import { Button } from "@mui/material";
 import { Search } from "./Search";
-import { ContactsResult } from "../../interfaces";
 
 interface Props {
   handleSearch: (value: string) => void,
