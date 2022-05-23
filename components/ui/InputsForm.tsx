@@ -1,12 +1,21 @@
 import { FC } from "react";
 import { TextField, Typography } from "@mui/material";
+import { ContactsResult, IFormInput } from "../../interfaces";
+import { FieldError, UseFormRegister } from "react-hook-form";
 
+interface Errors {
+  firstName?: FieldError;
+  lastName?: FieldError;
+  email?: FieldError;
+  phone?: FieldError;
+}
 interface Props {
-  register: any;
-  errors: any;
+  register: UseFormRegister<IFormInput>;
+  errors: Errors;
+  contact?: ContactsResult;
 }
 
-export const InputsForm: FC<Props> = ({ errors, register }) => {
+export const InputsForm: FC<Props> = ({ errors, register, contact }) => {
   return (
     <div>
       <div
@@ -17,6 +26,7 @@ export const InputsForm: FC<Props> = ({ errors, register }) => {
           label="Frist name *"
           variant="outlined"
           error={Boolean(errors.firstName)}
+          defaultValue={contact?.firstName}
         />
         {errors.firstName && <Typography color="error">Is required</Typography>}
       </div>
@@ -28,6 +38,7 @@ export const InputsForm: FC<Props> = ({ errors, register }) => {
           label="Last name *"
           variant="outlined"
           error={Boolean(errors.lastName)}
+          defaultValue={contact?.lastName}
         />
         {errors.lastName && <Typography color="error">Is required</Typography>}
       </div>
@@ -44,8 +55,13 @@ export const InputsForm: FC<Props> = ({ errors, register }) => {
           variant="outlined"
           error={Boolean(errors.email)}
           type="email"
+          defaultValue={contact?.email}
         />
-        {errors.email && <Typography color="error">Is required or the email is wrong</Typography>}
+        {errors.email && (
+          <Typography color="error">
+            Is required or the email is wrong
+          </Typography>
+        )}
       </div>
       <div
         style={{ marginBottom: 18, display: "flex", flexDirection: "column" }}
@@ -60,8 +76,13 @@ export const InputsForm: FC<Props> = ({ errors, register }) => {
           variant="outlined"
           error={Boolean(errors.phone)}
           type="number"
+          defaultValue={contact?.phone}
         />
-        {errors.phone && <Typography color="error">Is required or the number is wrong</Typography>}
+        {errors.phone && (
+          <Typography color="error">
+            Is required or the number is wrong
+          </Typography>
+        )}
       </div>
     </div>
   );

@@ -16,6 +16,8 @@ export const Table = () => {
   }, [contacts])
   
   const handleSearch = (value: string) => {
+    //Modify endpoint _contains to be able to search through all columns
+    
     const data = contacts.filter(
       ({ firstName, lastName, email, phone }) =>
         validateValues(firstName, value) ||

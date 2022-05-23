@@ -1,25 +1,14 @@
-import { useState } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Alert, Button, Snackbar } from "@mui/material";
+import { Button } from "@mui/material";
 import { Layout } from "../../../components/layouts";
 import { InputsForm } from "../../../components/ui";
 import { backBoneApi } from "../../../api";
 import { contactData, selectContacts } from "../../../features/contacts";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-
-interface IFormInput {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: number;
-}
-
-const colors:any = {
-  success: 'success',
-  error: 'error'
-}
+import { selectAlerts, showAlert } from "../../../features/alerts";
+import { IFormInput } from "../../../interfaces";
 
 const CreateContact: NextPage = () => {
   const {
@@ -33,28 +22,17 @@ const CreateContact: NextPage = () => {
   const router = useRouter()
   const dispatch = useAppDispatch();
   const contacts = useAppSelector(selectContacts);
-  const [alert, setAlert] = useState({ open: false, message: "", type: "success" });
+  const alert = useAppSelector(selectAlerts);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       const response = await backBoneApi.post("/contacts", data);
       dispatch(contactData([...contacts, response.data]));
-      setAlert({ open: true, message: "Contact saved successfully!", type: "success" });
+      dispatch(showAlert({ open: true, message: "Contact edited successfully!", type: "success" }));
       router.push("/")
     } catch (error:any) {
-      setAlert({ open: true, message: error.response.data.message, type: "error" });
+      dispatch(showAlert({ open: true, message: error.response.data.message, type: "error" }));
     }
-  };
-
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setAlert({ open: false, message: "", type: "success" });
   };
 
   return (
@@ -76,17 +54,6 @@ const CreateContact: NextPage = () => {
           Guardar
         </Button>
       </form>
-
-      <Snackbar
-        open={alert.open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert onClose={handleClose} severity={colors[alert.type]} sx={{ width: "100%" }}>
-          {alert.message}
-        </Alert>
-      </Snackbar>
     </Layout>
   );
 };

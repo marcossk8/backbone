@@ -16,6 +16,7 @@ const Home: NextPage<Props> = ({ contacts }) => {
 
   useEffect(() => {
     dispatch(contactData(contacts))
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
@@ -27,7 +28,9 @@ const Home: NextPage<Props> = ({ contacts }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const { data } = await backBoneApi.get<ContactsListResponse>("/contacts");
+
+  //Modify endpoint so that you can get all the contacts and thus take full advantage of the static props of next js
+  const { data } = await backBoneApi.get<ContactsListResponse>("/contacts?perPage=100");
 
   return {
     props: {
