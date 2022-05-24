@@ -3,12 +3,13 @@ import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@mui/material";
 import { Layout } from "../../../components/layouts";
-import { InputsForm } from "../../../components/ui";
 import { backBoneApi } from "../../../api";
 import { contactData, selectContacts } from "../../../features/contacts";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectAlerts, showAlert } from "../../../features/alerts";
 import { IFormInput } from "../../../interfaces";
+import { ContactContainer, InputsForm, IconContainer, Title, TitleContainer, Container } from "../../../components/ui";
+import PersonAddAltRounded from "@mui/icons-material/PersonAddAltRounded";
 
 const CreateContact: NextPage = () => {
   const {
@@ -37,23 +38,38 @@ const CreateContact: NextPage = () => {
 
   return (
     <Layout title="Add contact">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{ display: "flex", flexDirection: "column", marginTop: 16 }}
-      >
-        <InputsForm register={register} errors={errors} />
+      <ContactContainer>
+        <Container>
+          <TitleContainer>
+            <IconContainer>
+              <PersonAddAltRounded />
+            </IconContainer>
+            <Title>Create a new contact</Title>
+          </TitleContainer>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            style={{ display: "flex", flexDirection: "column", padding: 16 }}
+          >
+            <InputsForm register={register} errors={errors} />
 
-        <Button
-          color="primary"
-          variant="outlined"
-          type="submit"
-          size="large"
-          style={{ marginTop: 16 }}
-          disabled={!isValid || alert.open}
-        >
-          Guardar
-        </Button>
-      </form>
+            <Button
+              sx={{
+                borderRadius: "10px",
+                borderColor: "#4d98ff",
+                color: "#4d98ff",
+              }}
+              color="primary"
+              variant="outlined"
+              type="submit"
+              size="large"
+              style={{ marginTop: 16 }}
+              disabled={!isValid || alert.open}
+            >
+              Save
+            </Button>
+          </form>
+        </Container>
+      </ContactContainer>
     </Layout>
   );
 };

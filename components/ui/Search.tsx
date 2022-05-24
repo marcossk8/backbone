@@ -10,6 +10,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { useAppSelector } from "../../app/hooks";
 import { selectSearch } from "../../features/search";
+import { Searcher } from "./Styled";
 
 interface Props {
   handleSearch: (value:string) => void,
@@ -38,9 +39,9 @@ export const Search:FC<Props> = ({ handleSearch, removeSearch }) => {
   return (
     <div style={{display: "flex", alignItems: "center"}}>
       <Tooltip title="Touch enter to search" placement="top-end">
-        <FormControl size="small" variant="outlined" >
+        <FormControl size="small" variant="outlined" sx={{ width: '36ch' }}>
           <InputLabel htmlFor="outlined-adornment-search">Search by first name</InputLabel>
-          <OutlinedInput
+          <Searcher
             id="outlined-adornment-search"
             value={searchInputValue}
             onChange={handleChangeSearch}
@@ -49,7 +50,7 @@ export const Search:FC<Props> = ({ handleSearch, removeSearch }) => {
                 <SearchIcon />
               </InputAdornment>
             }
-            label="Search by name"
+            label="Search by first name"
             onKeyPress={handleOnKeyPress}
           />
         </FormControl>

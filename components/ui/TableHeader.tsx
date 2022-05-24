@@ -13,16 +13,21 @@ export const TableHeader:FC<Props> = ({ handleSearch, removeSearch }) => {
       style={{
         display: "flex",
         justifyContent: "space-between",
+        alignItems: "center",
         flexWrap: "wrap",
-        paddingTop: 16,
-        paddingBottom: 16,
+        marginBottom: 20,
+        maxHeight: "10%",
       }}
     >
       <Search handleSearch={handleSearch} removeSearch={removeSearch} />
 
       <Link href="/contact/create">
-        <Button color="primary" variant="outlined">
-          Nuevo contacto
+        <Button
+          sx={{ borderRadius: "10px" }}
+          color="primary"
+          variant="outlined"
+        >
+          New contact
         </Button>
       </Link>
     </div>

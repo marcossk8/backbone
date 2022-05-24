@@ -1,7 +1,6 @@
 import * as React from "react";
 import Head from "next/head";
-
-import { Alert, Box, Container, Snackbar } from "@mui/material";
+import { Alert, Box, Snackbar } from "@mui/material";
 import { NavBar } from "../ui";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectAlerts, showAlert } from "../../features/alerts";
@@ -33,20 +32,24 @@ export const Layout: React.FC<Props> = ({ title = "Contacts", children }) => {
 
       <NavBar title={title} />
 
-      <Box>
-        <Container>{children}</Container>
+      <Box sx={{ height: "calc(100vh - 64px)", overflow: "auto" }}>
+        {children}
       </Box>
 
       <Snackbar
-      open={alert.open}
-      autoHideDuration={6000}
-      onClose={handleClose}
-      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-    >
-      <Alert onClose={handleClose} severity={alert.type} sx={{ width: "100%" }}>
-        {alert.message}
-      </Alert>
-    </Snackbar>
+        open={alert.open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={alert.type}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

@@ -6,14 +6,27 @@ import {
   ContactsResult,
 } from "../../../interfaces";
 import { getContactInfo } from "../../../utilities";
-import { Button } from "@mui/material";
+import { Box, BoxProps, Button } from "@mui/material";
 import { Layout } from "../../../components/layouts";
 import { contactData, selectContacts } from "../../../features/contacts";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { showAlert } from "../../../features/alerts";
+import { styled } from "@mui/material/styles";
+import { ContactContainer, Container, Input, Title, TitleContainer } from "../../../components/ui";
+import DeleteRounded from "@mui/icons-material/DeleteRounded";
 interface Props {
   contact: ContactsResult;
 }
+
+export const IconContainer = styled(Box)<BoxProps>(() => ({
+  width: 40,
+  height: 40,
+  borderRadius: '33%',
+  backgroundColor: '#fdb1b1',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
 
 const DeleteContact: NextPage<Props> = ({ contact }) => {
   
@@ -49,7 +62,76 @@ const DeleteContact: NextPage<Props> = ({ contact }) => {
 
   return (
     <Layout title="Delete contact">
-      <Button onClick={handleDeleteContact}>Delete</Button>
+      <ContactContainer>
+        <Container>
+          <TitleContainer>
+            <IconContainer>
+              <DeleteRounded sx={{ color: "#ff2d2d" }} />
+            </IconContainer>
+            <Title>Delete contact</Title>
+          </TitleContainer>
+          <div
+            style={{ display: "flex", flexDirection: "column", padding: 16 }}
+          >
+            <div className="flex">
+              <Input
+                label="Frist name *"
+                variant="outlined"
+                disabled
+                defaultValue={contact?.firstName}
+              />
+              <Input
+                label="Last name *"
+                variant="outlined"
+                defaultValue={contact?.lastName}
+                disabled
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </div>
+            <Input
+              label="Email *"
+              variant="outlined"
+              type="email"
+              disabled
+              defaultValue={contact?.email}
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+            <Input
+              label="Phone *"
+              variant="outlined"
+              type="number"
+              disabled
+              defaultValue={contact?.phone}
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+            <Button
+              sx={{
+                borderRadius: "10px",
+                borderColor: "#ff2d2d",
+                color: "#ff2d2d",
+                "&:hover": {
+                  borderColor: "#ff2d2d",
+                  color: "#ff2d2d",
+                },
+              }}
+              color="primary"
+              variant="outlined"
+              type="submit"
+              size="large"
+              onClick={handleDeleteContact}
+              style={{ marginTop: 16 }}
+            >
+              Delete
+            </Button>
+          </div>
+        </Container>
+      </ContactContainer>
     </Layout>
   );
 };

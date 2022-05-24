@@ -10,12 +10,25 @@ import { getContactInfo } from "../../../utilities";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@mui/material";
 import { Layout } from "../../../components/layouts";
-import { InputsForm } from "../../../components/ui";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectAlerts, showAlert } from "../../../features/alerts";
+import { styled } from "@mui/material/styles";
+import { Box, BoxProps } from "@mui/system";
+import { ContactContainer, Container, InputsForm, Title, TitleContainer } from "../../../components/ui";
+import ModeEditRounded from "@mui/icons-material/ModeEditRounded";
 interface Props {
   contact: ContactsResult;
 }
+
+export const IconContainer = styled(Box)<BoxProps>(() => ({
+  width: 40,
+  height: 40,
+  borderRadius: '33%',
+  backgroundColor: '#ffeabe',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
 
 const UpdateContact: NextPage<Props> = ({ contact }) => {
   const {
@@ -55,23 +68,42 @@ const UpdateContact: NextPage<Props> = ({ contact }) => {
 
   return (
     <Layout title="Update contact">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{ display: "flex", flexDirection: "column", marginTop: 16 }}
-      >
-        <InputsForm register={register} errors={errors} contact={contact} />
+      <ContactContainer>
+        <Container>
+          <TitleContainer>
+            <IconContainer>
+              <ModeEditRounded sx={{ color: "#c7a600" }} />
+            </IconContainer>
+            <Title>Update contact data</Title>
+          </TitleContainer>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            style={{ display: "flex", flexDirection: "column", padding: 16 }}
+          >
+            <InputsForm register={register} errors={errors} contact={contact} />
 
-        <Button
-          color="primary"
-          variant="outlined"
-          type="submit"
-          size="large"
-          style={{ marginTop: 16 }}
-          disabled={!isValid || alert.open}
-        >
-          Guardar
-        </Button>
-      </form>
+            <Button
+              sx={{
+                borderRadius: "10px",
+                borderColor: "#c7a600",
+                color: "#c7a600",
+                "&:hover": {
+                  borderColor: "#c7a600",
+                  color: "#c7a600",
+                },
+              }}
+              color="primary"
+              variant="outlined"
+              type="submit"
+              size="large"
+              style={{ marginTop: 16 }}
+              disabled={!isValid || alert.open}
+            >
+              Update
+            </Button>
+          </form>
+        </Container>
+      </ContactContainer>
     </Layout>
   );
 };

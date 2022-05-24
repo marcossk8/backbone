@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { contactData, selectContacts } from "../../features/contacts";
 import { gridColumns } from "../../utilities";
@@ -8,6 +7,8 @@ import { ContactsListResponse } from "../../interfaces";
 import { backBoneApi } from "../../api";
 import { showAlert } from "../../features/alerts";
 import { searchData, selectSearch } from "../../features/search";
+import { DataTableGrid } from "./Styled";
+import { NoRowsOverlay } from "./"
 
 export const Table = () => {
   const dispatch = useAppDispatch();
@@ -66,8 +67,8 @@ export const Table = () => {
   return (
     <>
       <TableHeader handleSearch={handleSearch} removeSearch={removeSearch} />
-      <div style={{ height: 700, width: "100%" }}>
-        <DataGrid
+      <div style={{ height: "90%",paddingBottom: 20 }}>
+        <DataTableGrid
           page={contacts.page}
           rows={contacts.results}
           columns={gridColumns}
@@ -78,9 +79,9 @@ export const Table = () => {
           pagination
           onPageChange={(newPage) => handleChangePage(newPage)}
           rowCount={contacts.totalPages}
-          autoHeight 
           paginationMode="server"
           loading={loading}
+          components={{ NoRowsOverlay }}
         />
       </div>
     </>
