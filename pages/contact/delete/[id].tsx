@@ -25,8 +25,8 @@ const DeleteContact: NextPage<Props> = ({ contact }) => {
     try {
       await backBoneApi.delete(`/contacts/${contact.id}`);
       
-      const deleteContact = contacts.filter(contactElement => contactElement.id !== contact.id)
-      dispatch(contactData(deleteContact));
+      const deleteContact = contacts.results.filter(contactElement => contactElement.id !== contact.id)
+      dispatch(contactData({...contacts, results: deleteContact}));
 
       dispatch(
         showAlert({

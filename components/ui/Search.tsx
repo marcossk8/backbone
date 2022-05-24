@@ -39,7 +39,7 @@ export const Search:FC<Props> = ({ handleSearch, removeSearch }) => {
     <div style={{display: "flex", alignItems: "center"}}>
       <Tooltip title="Touch enter to search" placement="top-end">
         <FormControl size="small" variant="outlined" >
-          <InputLabel htmlFor="outlined-adornment-search">Search by name</InputLabel>
+          <InputLabel htmlFor="outlined-adornment-search">Search by first name</InputLabel>
           <OutlinedInput
             id="outlined-adornment-search"
             value={searchInputValue}

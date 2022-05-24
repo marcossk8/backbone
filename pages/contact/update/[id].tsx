@@ -11,7 +11,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@mui/material";
 import { Layout } from "../../../components/layouts";
 import { InputsForm } from "../../../components/ui";
-import { contactData, selectContacts } from "../../../features/contacts";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectAlerts, showAlert } from "../../../features/alerts";
 interface Props {
@@ -29,13 +28,12 @@ const UpdateContact: NextPage<Props> = ({ contact }) => {
 
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const contacts = useAppSelector(selectContacts);
   const alert = useAppSelector(selectAlerts);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
-      const response = await backBoneApi.put(`/contacts/${contact.id}`, data);
-      dispatch(contactData([...contacts, response.data]));
+      await backBoneApi.put(`/contacts/${contact.id}`, data);
+      
       dispatch(
         showAlert({
           open: true,
