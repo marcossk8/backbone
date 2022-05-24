@@ -1,7 +1,6 @@
    
-import { backBoneApi } from '../api';
-import { ContactsResult } from '../interfaces';
-
+import { backBoneApi } from "../api";
+import { ContactsResult } from "../interfaces";
 
 export const getContactInfo = async( id: string ) => {
   
@@ -20,7 +19,4 @@ export const getContactInfo = async( id: string ) => {
     } catch (error) {
         return null;
     }
-
-
-
 }
