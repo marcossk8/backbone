@@ -1,51 +1,86 @@
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { useAppSelector } from "../../app/hooks";
-import { selectContacts } from "../../features/contacts";
-import { gridColumns, removeAccents } from "../../utilities";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { contactData, selectContacts } from "../../features/contacts";
+import { gridColumns } from "../../utilities";
 import { TableHeader } from "./TableHeader";
-import { ContactsResult } from "../../interfaces";
+import { ContactsListResponse } from "../../interfaces";
+import { backBoneApi } from "../../api";
+import { showAlert } from "../../features/alerts";
+import { searchData, selectSearch } from "../../features/search";
 
 export const Table = () => {
+  const dispatch = useAppDispatch();
   const contacts = useAppSelector(selectContacts);
+  const searchValue = useAppSelector(selectSearch);
 
-  const [dataContacts, setDataContacts] = useState<ContactsResult[]>([]);
-
-  useEffect(() => {
-    setDataContacts(contacts)
-  }, [contacts])
+  const [loading, setLoading] = useState(false)
   
-  const handleSearch = (value: string) => {
-    //Modify endpoint _contains to be able to search through all columns
+  useEffect(() => {
+    if(searchValue) {
+      getContactsName(searchValue)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
+  const handleSearch = async (value:string)  => {
+    getContactsName(value)
+  };
+
+  const removeSearch = () => {
+    getContactsName("")
+  }
+
+  const getContactsName = async (value:string) => {
+    setLoading(true)
+    try {
+      // Modify endpoint _contains to be able to search through all columns
+      const { data } = await backBoneApi.get<ContactsListResponse>(`/contacts?firstName_contains=${ value }`);
+      
+      dispatch(contactData({ ...contacts, totalPages: data.totalPages, results: data.results,  }))
+      dispatch(searchData(value))
+      setLoading(false)
+
+    } catch (error:any) {
+      dispatch(showAlert({ open: true, message: error?.response.data.message, type: "error" }));
+      setLoading(false)
+    }
+  } 
+
+  const handleChangePage = async (newPage: number) => {
+    setLoading(true)
     
-    const data = contacts.filter(
-      ({ firstName, lastName, email, phone }) =>
-        validateValues(firstName, value) ||
-        validateValues(lastName, value) ||
-        validateValues(email, value) ||
-        validateValues(phone, value)
-    );
+    try {
+      const { data } = await backBoneApi.get<ContactsListResponse>(`/contacts?perPage=10&page=${ newPage + 1 }`);
+      
+      dispatch(contactData({ ...contacts, results: data.results, page: newPage }))
+      setLoading(false)
 
-    setDataContacts(data);
-  };
-
-  const validateValues = (contactElement: string, value: string) => {
-    return removeAccents(contactElement)
-      .toLowerCase()
-      .includes(removeAccents(value).toLowerCase());
-  };
+    } catch (error:any) {
+      dispatch(showAlert({ open: true, message: error?.response.data.message, type: "error" }));
+      setLoading(false)
+    }
+  }
 
   return (
     <>
-      <TableHeader handleSearch={handleSearch} />
-      <div style={{ height: "78vh", width: "100%" }}>
+      <TableHeader handleSearch={handleSearch} removeSearch={removeSearch} />
+      <div style={{ height: 700, width: "100%" }}>
         <DataGrid
-          rows={dataContacts}
+          page={contacts.page}
+          rows={contacts.results}
           columns={gridColumns}
           pageSize={10}
           rowsPerPageOptions={[10]}
           disableSelectionOnClick
           disableColumnMenu
+          pagination
+          onPageChange={(newPage) => handleChangePage(newPage)}
+          rowCount={contacts.totalPages}
+          autoHeight 
+          paginationMode="server"
+          loading={loading}
         />
       </div>
     </>

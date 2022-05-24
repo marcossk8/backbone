@@ -3,11 +3,11 @@ import type { GetStaticProps, NextPage } from "next";
 import { backBoneApi } from "../api";
 import { Layout } from "../components/layouts";
 import { Table } from "../components/ui";
-import { ContactsListResponse, ContactsResult } from "../interfaces";
+import { ContactsListResponse } from "../interfaces";
 import { useAppDispatch } from "../app/hooks";
 import { contactData } from "../features/contacts";
 interface Props {
-  contacts: ContactsResult[];
+  contacts: ContactsListResponse;
 }
 
 const Home: NextPage<Props> = ({ contacts }) => {
@@ -29,12 +29,12 @@ const Home: NextPage<Props> = ({ contacts }) => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
 
-  //Modify endpoint so that you can get all the contacts and thus take full advantage of the static props of next js
-  const { data } = await backBoneApi.get<ContactsListResponse>("/contacts?perPage=100");
+  // Modify endpoint so that you can get all the contacts and thus take full advantage of the static props of next js
+  const { data } = await backBoneApi.get<ContactsListResponse>("/contacts?perPage=10");
 
   return {
     props: {
-      contacts: data.results,
+      contacts: { results: data.results, totalPages: data.totalPages, page: 0 },
     },
   };
 };

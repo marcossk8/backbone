@@ -1,13 +1,13 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { contactData } from "./actions";
-import { ContactsResult } from "../../interfaces";
+import { ContactsListResponse } from "../../interfaces";
 
 type ContactsState = {
-  data: ContactsResult[];
+  data: ContactsListResponse;
 };
 
 const initialState: ContactsState = {
-    data: [],
+    data: { results: [], totalPages: 0, page: 0 },
 };
 
 export const contactsReducer = createReducer(initialState, (builder) => {

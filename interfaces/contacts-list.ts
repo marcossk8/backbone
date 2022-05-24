@@ -1,8 +1,9 @@
 export interface ContactsListResponse {
-    count:       number;
-    perPage:     number;
-    currentPage: number;
+    count?:       number;
+    perPage?:     number;
+    currentPage?: number;
     totalPages:  number;
+    page:        number;
     results:     ContactsResult[];
 }
 

@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { ContactsResult } from "../../interfaces";
+import { ContactsListResponse } from "../../interfaces";
 
-export const contactData = createAction<ContactsResult[]>("contacts/data");
+export const contactData = createAction<ContactsListResponse>("contacts/data");
 

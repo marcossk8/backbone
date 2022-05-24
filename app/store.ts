@@ -1,12 +1,14 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { alertsReducer } from "../features/alerts/reducer";
 import { contactsReducer } from "../features/contacts";
+import { searchReducer } from "../features/search";
 
 export const store = configureStore({
   reducer: {
     // This is where we add reducers.
     contacts: contactsReducer,
-    alerts: alertsReducer
+    alerts: alertsReducer,
+    search: searchReducer,
   },
 });
 

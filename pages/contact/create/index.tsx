@@ -27,7 +27,7 @@ const CreateContact: NextPage = () => {
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       const response = await backBoneApi.post("/contacts", data);
-      dispatch(contactData([...contacts, response.data]));
+      dispatch(contactData({...contacts, results: response.data}));
       dispatch(showAlert({ open: true, message: "Contact edited successfully!", type: "success" }));
       router.push("/")
     } catch (error:any) {
