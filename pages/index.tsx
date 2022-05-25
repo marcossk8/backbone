@@ -13,6 +13,8 @@ interface Props {
   contacts: ContactsListResponse;
 }
 
+// Style organization and code repetition could be improved.
+
 export const Container = styled(Box)<BoxProps>(() => ({
   padding: 20,
   width: '100%',
