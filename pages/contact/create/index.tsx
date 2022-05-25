@@ -32,7 +32,13 @@ const CreateContact: NextPage = () => {
       dispatch(showAlert({ open: true, message: "Contact edited successfully!", type: "success" }));
       router.push("/")
     } catch (error:any) {
-      dispatch(showAlert({ open: true, message: error.response.data.message, type: "error" }));
+      dispatch(
+        showAlert({
+          open: true,
+          message: error?.response?.data?.message || "Sorry, there was an error!",
+          type: "error",
+        })
+      );
     }
   };
 

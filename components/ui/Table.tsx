@@ -39,12 +39,18 @@ export const Table = () => {
       // Modify endpoint _contains to be able to search through all columns
       const { data } = await backBoneApi.get<ContactsListResponse>(`/contacts?firstName_contains=${ value }`);
       
-      dispatch(contactData({ ...contacts, totalPages: data.totalPages, results: data.results,  }))
+      dispatch(contactData({ ...contacts, totalPages: data.totalPages, results: data.results }))
       dispatch(searchData(value))
       setLoading(false)
 
     } catch (error:any) {
-      dispatch(showAlert({ open: true, message: error?.response.data.message, type: "error" }));
+      dispatch(
+        showAlert({
+          open: true,
+          message: error?.response?.data?.message || "Sorry, there was an error!",
+          type: "error",
+        })
+      );
       setLoading(false)
     }
   } 
@@ -59,7 +65,13 @@ export const Table = () => {
       setLoading(false)
 
     } catch (error:any) {
-      dispatch(showAlert({ open: true, message: error?.response.data.message, type: "error" }));
+      dispatch(
+        showAlert({
+          open: true,
+          message: error?.response?.data?.message || "Sorry, there was an error!",
+          type: "error",
+        })
+      );
       setLoading(false)
     }
   }
@@ -67,7 +79,7 @@ export const Table = () => {
   return (
     <>
       <TableHeader handleSearch={handleSearch} removeSearch={removeSearch} />
-      <div style={{ height: "90%",paddingBottom: 20 }}>
+      <div style={{ height: "90%", paddingBottom: 20 }}>
         <DataTableGrid
           page={contacts.page}
           rows={contacts.results}

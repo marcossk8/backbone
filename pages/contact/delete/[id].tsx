@@ -53,7 +53,7 @@ const DeleteContact: NextPage<Props> = ({ contact }) => {
       dispatch(
         showAlert({
           open: true,
-          message: error?.response.data.message || "Sorry, there was an error!",
+          message: error?.response?.data?.message || "Sorry, there was an error!",
           type: "error",
         })
       );
