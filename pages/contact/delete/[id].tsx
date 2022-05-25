@@ -6,27 +6,16 @@ import {
   ContactsResult,
 } from "../../../interfaces";
 import { getContactInfo } from "../../../utilities";
-import { Box, BoxProps, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { Layout } from "../../../components/layouts";
 import { contactData, selectContacts } from "../../../features/contacts";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { showAlert } from "../../../features/alerts";
-import { styled } from "@mui/material/styles";
-import { ContactContainer, Container, Input, Title, TitleContainer } from "../../../components/ui";
+import { ContactContainer, Container, IconContainer, Input, Title, TitleContainer } from "../../../components/ui";
 import DeleteRounded from "@mui/icons-material/DeleteRounded";
 interface Props {
   contact: ContactsResult;
 }
-
-export const IconContainer = styled(Box)<BoxProps>(() => ({
-  width: 40,
-  height: 40,
-  borderRadius: '33%',
-  backgroundColor: '#fdb1b1',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
 
 const DeleteContact: NextPage<Props> = ({ contact }) => {
   
@@ -65,7 +54,7 @@ const DeleteContact: NextPage<Props> = ({ contact }) => {
       <ContactContainer>
         <Container>
           <TitleContainer>
-            <IconContainer>
+            <IconContainer sx={{ backgroundColor: "#fdb1b1" }}>
               <DeleteRounded sx={{ color: "#ff2d2d" }} />
             </IconContainer>
             <Title>Delete contact</Title>

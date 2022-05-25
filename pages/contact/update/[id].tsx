@@ -12,23 +12,11 @@ import { Button } from "@mui/material";
 import { Layout } from "../../../components/layouts";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectAlerts, showAlert } from "../../../features/alerts";
-import { styled } from "@mui/material/styles";
-import { Box, BoxProps } from "@mui/system";
-import { ContactContainer, Container, InputsForm, Title, TitleContainer } from "../../../components/ui";
+import { ContactContainer, Container, IconContainer, InputsForm, Title, TitleContainer } from "../../../components/ui";
 import ModeEditRounded from "@mui/icons-material/ModeEditRounded";
 interface Props {
   contact: ContactsResult;
 }
-
-export const IconContainer = styled(Box)<BoxProps>(() => ({
-  width: 40,
-  height: 40,
-  borderRadius: '33%',
-  backgroundColor: '#ffeabe',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
 
 const UpdateContact: NextPage<Props> = ({ contact }) => {
   const {
@@ -71,7 +59,7 @@ const UpdateContact: NextPage<Props> = ({ contact }) => {
       <ContactContainer>
         <Container>
           <TitleContainer>
-            <IconContainer>
+            <IconContainer sx={{ backgroundColor: "#ffeabe" }}>
               <ModeEditRounded sx={{ color: "#c7a600" }} />
             </IconContainer>
             <Title>Update contact data</Title>

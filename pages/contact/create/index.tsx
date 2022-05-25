@@ -47,8 +47,8 @@ const CreateContact: NextPage = () => {
       <ContactContainer>
         <Container>
           <TitleContainer>
-            <IconContainer>
-              <PersonAddAltRounded />
+            <IconContainer sx={{ backgroundColor: "#bed0ff" }}>
+              <PersonAddAltRounded sx={{ color: "#4276ff" }} />
             </IconContainer>
             <Title>Create a new contact</Title>
           </TitleContainer>

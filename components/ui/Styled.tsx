@@ -12,6 +12,10 @@ import {
 import { DataGridProps } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 
+interface Colors {
+    color:string;
+}
+
 export const ContactContainer = styled(Box)<BoxProps>(() => ({
     width: '100%',
     height: '100%',
@@ -40,7 +44,6 @@ export const IconContainer = styled(Box)<BoxProps>(() => ({
     width: 40,
     height: 40,
     borderRadius: '33%',
-    backgroundColor: '#bed0ff',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
